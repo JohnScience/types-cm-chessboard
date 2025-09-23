@@ -8,5 +8,9 @@
             "name": "Dmitrii Demenev",
             "url": "https://github.com/JohnScience"
         }
+    ],
+    "types": "index.d.ts",
+    "files": [
+        "**/*.d.ts"
     ]
 }
