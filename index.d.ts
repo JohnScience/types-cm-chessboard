@@ -77,7 +77,7 @@ export interface ChessboardOptions {
         pieces: ChessPiecesConfig,
         animationDuration: number;
     },
-    extensions: [Extension];
+    extensions: Extension[];
 }
 
 declare module "cm-chessboard" {
