@@ -1,0 +1,12 @@
+{
+    "name": "@types/cm-chessboard",
+    "version": "8.10.1",
+    "description": "TypeScript definitions for cm-chessboard",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "Dmitrii Demenev",
+            "url": "https://github.com/JohnScience"
+        }
+    ]
+}
