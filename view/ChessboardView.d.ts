@@ -26,49 +26,49 @@ export interface Move {
     promotion: any;
 }
 
-export type MoveInputStartedEvent = {
-    chessboard: Chessboard,
+export type MoveInputStartedEvent<C extends Chessboard> = {
+    chessboard: C,
     type: typeof INPUT_EVENT_TYPE.moveInputStarted,
     squareFrom: Square,
     piece: Piece,
 };
 
-export type MovingOverSquareEvent = {
-    chessboard: Chessboard,
+export type MovingOverSquareEvent<C extends Chessboard> = {
+    chessboard: C,
     type: typeof INPUT_EVENT_TYPE.movingOverSquare,
     squareFrom: Square,
     squareTo: Square | null,
     piece: Piece,
 };
 
-export type ValidateMoveInputEvent = {
-    chessboard: Chessboard,
+export type ValidateMoveInputEvent<C extends Chessboard> = {
+    chessboard: C,
     type: typeof INPUT_EVENT_TYPE.validateMoveInput,
     squareFrom: Square,
     squareTo: Square,
     piece: Piece,
 };
 
-export type MoveInputCanceledEvent = {
-    chessboard: Chessboard,
+export type MoveInputCanceledEvent<C extends Chessboard> = {
+    chessboard: C,
     type: typeof INPUT_EVENT_TYPE.moveInputCanceled,
     reason: MoveCanceledReason;
     squareFrom: Square,
     squareTo: Square | null,
 };
 
-export type MoveInputFinishedEvent = {
-    chessboard: Chessboard,
+export type MoveInputFinishedEvent<C extends Chessboard> = {
+    chessboard: C,
     type: typeof INPUT_EVENT_TYPE.moveInputFinished,
     squareFrom: Square | null,
     squareTo: Square | null,
     legalMove: Move | undefined,
 };
 
-export type ChessboardEvent =
-    MoveInputStartedEvent |
-    MovingOverSquareEvent |
-    ValidateMoveInputEvent |
-    MoveInputCanceledEvent |
-    MoveInputFinishedEvent;
+export type ChessboardEvent<C extends Chessboard> =
+    MoveInputStartedEvent<C> |
+    MovingOverSquareEvent<C> |
+    ValidateMoveInputEvent<C> |
+    MoveInputCanceledEvent<C> |
+    MoveInputFinishedEvent<C>;
 

@@ -22,7 +22,8 @@ export type Color = typeof COLOR[keyof typeof COLOR];
 /**
  * An extension for the `cm-chessboard`.
  */
-export interface Extension {
+// ChessboardExtraProps are the props that are added to the Chessboard type by the extension
+export interface Extension<ChessboardExtraProps extends Record<string, any> = {}> {
     /**
      * The class of the extension.
      */
@@ -110,6 +111,10 @@ export class Chessboard {
     getExtension(classRef: any): any;
     destroy(): void;
 }
+
+export type ChessboardWithExtensions<Extensions extends [Extension<any>, ...Extension<any>[]]> = Chessboard & {
+    [K in keyof Extensions]: Extensions[K] extends Extension<infer P> ? P : never
+};
 
 declare module "cm-chessboard" {
     export const Chessboard: typeof import(".").Chessboard;

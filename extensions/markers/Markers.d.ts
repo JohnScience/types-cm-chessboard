@@ -1,7 +1,19 @@
+import { Extension } from "../..";
+
 declare module "cm-chessboard/src/extensions/markers/Markers.js" {
     export class Markers {
         [key: string]: any;
     }
+
+    export type MarkersExtraChessboardProps = {
+        addMarker: any;
+        getMarkers: any;
+        removeMarkers: any;
+        addLegalMoveMarkers: any;
+        removeLegalMoveMarkers: any;
+    }
+
+    export type MarkersExtension = Extension<MarkersExtraChessboardProps>;
 
     const MARKER_TYPE: {
         frame: { class: "marker-frame", slice: "markerFrame" },
