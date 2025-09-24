@@ -68,7 +68,7 @@ export interface ChessboardOptions {
     orientation?: Color;
     responsive?: boolean;
     assetsUrl: string;
-    assetsCache: boolean;
+    assetsCache?: boolean;
     style?: {
         cssClass: string;
         showCoordinates: boolean;
@@ -77,7 +77,7 @@ export interface ChessboardOptions {
         pieces: ChessPiecesConfig,
         animationDuration: number;
     },
-    extensions: Extension[];
+    extensions?: Extension[];
 }
 
 declare module "cm-chessboard" {
