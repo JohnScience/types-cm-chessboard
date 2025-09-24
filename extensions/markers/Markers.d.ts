@@ -1,6 +1,6 @@
 /// <reference path="../../index.d.ts" />
 
-import { Extension } from "../..";
+import { Extension } from "../../cm-chessboard";
 
 declare module "cm-chessboard/src/extensions/markers/Markers.js" {
     export class Markers {

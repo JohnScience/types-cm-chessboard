@@ -1,4 +1,4 @@
-import { Chessboard, Color, FenPosition, Piece, Square } from "..";
+import { Chessboard, Color, FenPosition, Piece, Square } from "../cm-chessboard";
 import { MoveCanceledReason } from "./VisualViewInput";
 
 export declare const INPUT_EVENT_TYPE: {
