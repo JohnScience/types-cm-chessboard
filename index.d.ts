@@ -80,11 +80,39 @@ export interface ChessboardOptions {
     extensions?: Extension[];
 }
 
+export type File = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h";
+export type Rank = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8";
+export type Square = `${File}${Rank}`;
+
+export const PIECE: {
+    wp: "wp", wb: "wb", wn: "wn", wr: "wr", wq: "wq", wk: "wk",
+    bp: "bp", bb: "bb", bn: "bn", br: "br", bq: "bq", bk: "bk"
+};
+
+export type Piece = typeof PIECE[keyof typeof PIECE];
+
+export class Chessboard {
+    constructor(context: HTMLElement, opts: ChessboardOptions);
+    setPiece(square: Square, piece: Piece, animated: boolean): Promise<any>;
+    movePiece(squareFrom: Square, squareTo: Square, animated: boolean): Promise<any>;
+    setPosition(fen: FenPosition, animated: boolean): Promise<any>;
+    setOrientation(color: Color, animated: boolean): Promise<any>;
+    getPiece(square: Square): any;
+    getPosition(): any;
+    getOrientation(): any;
+    enableMoveInput(eventHandler: (event: any) => boolean, color?: Color): void;
+    disableMoveInput(): void;
+    isMoveInputEnabled(): boolean;
+    enableSquareSelect(eventType: any, eventHandler: (event: any) => any): void;
+    disableSquareSelect(): void;
+    isSquareSelectEnabled(): boolean;
+    addExtension(extension: Extension): void;
+    getExtension(classRef: any): any;
+    destroy(): void;
+}
+
 declare module "cm-chessboard" {
-    export class Chessboard {
-        constructor(context: HTMLElement, opts: ChessboardOptions);
-        [key: string]: any;
-    }
+    export const Chessboard: typeof import(".").Chessboard;
 
     export const INPUT_EVENT_TYPE: typeof import("./view/ChessboardView").INPUT_EVENT_TYPE;
     export const COLOR: typeof import("./view/ChessboardView").COLOR;
