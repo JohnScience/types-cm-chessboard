@@ -1,3 +1,5 @@
+/// <reference path="../../index.d.ts" />
+
 import { Extension } from "../..";
 
 declare module "cm-chessboard/src/extensions/markers/Markers.js" {
