@@ -3,3 +3,5 @@
 /// <reference path="extensions/promotion-dialog/PromotionDialog.d.ts" />
 /// <reference path="extensions/accessibility/Accessibility.d.ts" />
 /// <reference path="extensions/right-click-annotator/RightClickAnnotator.d.ts" />
+
+export * from "./cm-chessboard";
