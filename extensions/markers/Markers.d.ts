@@ -1,7 +1,3 @@
-/// <reference path="../../index.d.ts" />
-
-import { Extension } from "../../cm-chessboard";
-
 declare module "cm-chessboard/src/extensions/markers/Markers.js" {
     export class Markers {
         [key: string]: any;
@@ -15,7 +11,7 @@ declare module "cm-chessboard/src/extensions/markers/Markers.js" {
         removeLegalMoveMarkers: any;
     }
 
-    export type MarkersExtension = Extension<MarkersExtraChessboardProps>;
+    export type MarkersExtension = import("../../cm-chessboard").Extension<MarkersExtraChessboardProps>;
 
     const MARKER_TYPE: {
         frame: { class: "marker-frame", slice: "markerFrame" },
