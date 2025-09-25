@@ -7,8 +7,8 @@ declare module "cm-chessboard/src/extensions/markers/Markers.js" {
         addMarker: any;
         getMarkers: any;
         removeMarkers: any;
-        addLegalMoveMarkers: any;
-        removeLegalMoveMarkers: any;
+        addLegalMovesMarkers: any;
+        removeLegalMovesMarkers: any;
     }
 
     export type MarkersExtension = import("../../cm-chessboard").Extension<MarkersExtraChessboardProps>;
