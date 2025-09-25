@@ -1,4 +1,4 @@
-import { Chessboard, Color, FenPosition, Piece, Square } from "../cm-chessboard";
+import { Chessboard, FenPosition, Piece, Square } from "../cm-chessboard";
 import { MoveCanceledReason } from "./VisualViewInput";
 
 export declare const INPUT_EVENT_TYPE: {
@@ -13,6 +13,13 @@ export declare const COLOR: {
     white: "w",
     black: "b"
 };
+
+/**
+ * Color of a chess piece or player.
+ * 
+ * @see COLOR
+ */
+export type Color = typeof COLOR[keyof typeof COLOR];
 
 export interface Move {
     after: FenPosition;

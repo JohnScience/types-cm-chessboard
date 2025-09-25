@@ -1,4 +1,4 @@
-import { COLOR } from "./view/ChessboardView";
+type Color = import("./view/ChessboardView").Color;
 
 /**
  * Forsyth-Edwards Notation (FEN) string that
@@ -6,13 +6,6 @@ import { COLOR } from "./view/ChessboardView";
  * @see https://www.chess.com/terms/fen-chess
  */
 export type FenPosition = string;
-
-/**
- * Color of a chess piece or player.
- * 
- * @see COLOR
- */
-export type Color = typeof COLOR[keyof typeof COLOR];
 
 /**
  * An extension for the `cm-chessboard`.
