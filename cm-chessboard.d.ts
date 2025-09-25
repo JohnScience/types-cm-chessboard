@@ -100,9 +100,13 @@ export class Chessboard {
     destroy(): void;
 }
 
-export type ChessboardWithExtensions<Extensions extends [Extension<any>, ...Extension<any>[]]> = Chessboard & {
-    [K in keyof Extensions]: Extensions[K] extends Extension<infer P> ? P : never
-};
+type UnionToIntersection<U> =
+    (U extends any ? (x: U) => void : never) extends ((x: infer I) => void) ? I : never;
+type ExtensionExtras<Exts extends [Extension<any>, ...Extension<any>[]]>
+    = UnionToIntersection<Exts[number] extends Extension<infer E> ? E : {}>;
+
+export type ChessboardWithExtensions<Extensions extends [Extension<any>, ...Extension<any>[]]> = Chessboard &
+    ExtensionExtras<Extensions>;
 
 declare module "cm-chessboard" {
     export const Chessboard: typeof import("./cm-chessboard").Chessboard;
