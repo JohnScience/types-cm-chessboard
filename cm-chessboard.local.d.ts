@@ -1,4 +1,5 @@
 import type { ChessboardState } from "./model/ChessboardState.local";
+import type { Color } from "./view/ChessboardView.local";
 
 export type { ChessboardEvent, Color } from "./view/ChessboardView.local"
 
@@ -121,6 +122,14 @@ export const PIECE: {
 };
 
 export type Piece = typeof PIECE[keyof typeof PIECE];
+
+export const PIECE_TYPE: {
+    pawn: "p", knight: "n", bishop: "b", rook: "r", queen: "q", king: "k"
+};
+
+export const PIECES_FILE_TYPE: {
+    svgSprite: "svgSprite"
+};
 
 export class Chessboard<
     Classes extends any[] = [],

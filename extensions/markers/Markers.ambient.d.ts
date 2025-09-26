@@ -1,5 +1,6 @@
 declare module "cm-chessboard/src/extensions/markers/Markers.js" {
     export type Markers = import("./Markers.local").Markers;
+    export type MarkersExtension = import("./Markers.local").MarkersExtension;
 
     export const MARKER_TYPE: {
         frame: { class: "marker-frame", slice: "markerFrame" },

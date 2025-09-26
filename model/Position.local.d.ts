@@ -1,7 +1,8 @@
+export const FEN: {
+    start: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+    empty: "8/8/8/8/8/8/8/8"
+};
+
 export class Position {
     [key: string]: any;
-}
-
-declare module "cm-chessboard/src/model/Position.js" {
-    export { Position };
 }
