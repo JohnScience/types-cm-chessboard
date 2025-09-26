@@ -1,5 +1,6 @@
-type Color = import("./view/ChessboardView.local").Color;
-type ChessboardState = import("./model/ChessboardState.local").ChessboardState;
+import type { ChessboardState } from "./model/ChessboardState.local";
+
+export type { ChessboardEvent, Color } from "./view/ChessboardView.local"
 
 /**
  * Forsyth-Edwards Notation (FEN) string that
@@ -150,10 +151,3 @@ type UnionToIntersection<U> =
 
 export type ChessboardWithExtensions<Extensions extends [Extension<any, any>, ...Extension<any, any>[]]> = Chessboard &
     UnionToIntersection<Extensions[number] extends Extension<any, any, infer P> ? P : never>;
-
-declare module "cm-chessboard" {
-    export const Chessboard: typeof import("./cm-chessboard.local").Chessboard;
-
-    export const INPUT_EVENT_TYPE: typeof import("./view/ChessboardView.local").INPUT_EVENT_TYPE;
-    export const COLOR: typeof import("./view/ChessboardView.local").COLOR;
-}
