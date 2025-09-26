@@ -1,9 +1,9 @@
-import { Extension } from "../cm-chessboard";
+import { Extension } from "../cm-chessboard.local";
 
 type Markers =
-    import("./markers/Markers").Markers;
+    import("./markers/Markers.local").Markers;
 type MarkersExtension =
-    import("./markers/Markers").MarkersExtension;
+    import("./markers/Markers.local").MarkersExtension;
 
 type KnownExtensions = [
     MarkersExtension,

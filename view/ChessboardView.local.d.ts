@@ -1,5 +1,5 @@
-import { Chessboard, FenPosition, Piece, Square } from "../cm-chessboard";
-import { MoveCanceledReason } from "./VisualViewInput";
+import { Chessboard, FenPosition, Piece, Square } from "../cm-chessboard.local";
+import { MoveCanceledReason } from "./VisualViewInput.local";
 
 export declare const INPUT_EVENT_TYPE: {
     moveInputStarted: "moveInputStarted",

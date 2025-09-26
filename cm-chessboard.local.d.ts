@@ -1,5 +1,5 @@
-type Color = import("./view/ChessboardView").Color;
-type ChessboardState = import("./model/ChessboardState").ChessboardState;
+type Color = import("./view/ChessboardView.local").Color;
+type ChessboardState = import("./model/ChessboardState.local").ChessboardState;
 
 /**
  * Forsyth-Edwards Notation (FEN) string that
@@ -61,7 +61,7 @@ type ExtensionsExtension<
 > = Classes extends [any, ...any[]] ? {
     extensions: {
         [K in keyof Classes]:
-        import("./extensions/index").InferredExtension<Classes[K], ExtraKnownExts> extends Extension<Classes[K], infer OwnProps, infer ExtraProps>
+        import("./extensions/index.local").InferredExtension<Classes[K], ExtraKnownExts> extends Extension<Classes[K], infer OwnProps, infer ExtraProps>
         ? ExtensionOption<Extension<Classes[K], OwnProps, ExtraProps>>
         : never;
     };
@@ -82,7 +82,7 @@ declare class TestClass {
 //         props: MarkersExtraChessboardProps;
 //     }];
 // }
-type Test = ExtensionsExtension<[import("./extensions/markers/Markers").Markers, TestClass]>;
+type Test = ExtensionsExtension<[import("./extensions/markers/Markers.local").Markers, TestClass]>;
 
 export type ChessboardOptions<
     Classes extends any[] = [],
@@ -152,8 +152,8 @@ export type ChessboardWithExtensions<Extensions extends [Extension<any, any>, ..
     UnionToIntersection<Extensions[number] extends Extension<any, any, infer P> ? P : never>;
 
 declare module "cm-chessboard" {
-    export const Chessboard: typeof import("./cm-chessboard").Chessboard;
+    export const Chessboard: typeof import("./cm-chessboard.local").Chessboard;
 
-    export const INPUT_EVENT_TYPE: typeof import("./view/ChessboardView").INPUT_EVENT_TYPE;
-    export const COLOR: typeof import("./view/ChessboardView").COLOR;
+    export const INPUT_EVENT_TYPE: typeof import("./view/ChessboardView.local").INPUT_EVENT_TYPE;
+    export const COLOR: typeof import("./view/ChessboardView.local").COLOR;
 }

@@ -9,7 +9,7 @@
             "url": "https://github.com/JohnScience"
         }
     ],
-    "types": "index.d.ts",
+    "types": "index.local.d.ts",
     "files": [
         "**/*.d.ts"
     ]

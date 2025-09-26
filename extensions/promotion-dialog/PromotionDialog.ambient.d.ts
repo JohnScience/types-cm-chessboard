@@ -1,6 +1,6 @@
-type Piece = import("../../cm-chessboard").Piece;
-type Square = import("../../cm-chessboard").Square;
-type Color = import("../../view/ChessboardView").Color;
+type Piece = import("../../cm-chessboard.local").Piece;
+type Square = import("../../cm-chessboard.local").Square;
+type Color = import("../../view/ChessboardView.local").Color;
 
 declare module "cm-chessboard/src/extensions/promotion-dialog/PromotionDialog.js" {
     export class PromotionDialog {
@@ -18,7 +18,7 @@ declare module "cm-chessboard/src/extensions/promotion-dialog/PromotionDialog.js
         isPromotionDialogShown: () => boolean;
     }
 
-    export type PromotionDialogExtension = import("../../cm-chessboard").Extension<PromotionDialogExtraChessboardProps>;
+    export type PromotionDialogExtension = import("../../cm-chessboard.local").Extension<PromotionDialogExtraChessboardProps>;
 
     export const PROMOTION_DIALOG_RESULT_TYPE: {
         pieceSelected: "pieceSelected",

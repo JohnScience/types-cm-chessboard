@@ -17,7 +17,7 @@ export type MarkersOwnProps = {
     };
 }
 
-export type MarkersExtension = import("../../cm-chessboard").Extension<Markers, MarkersOwnProps, MarkersExtraChessboardProps>;
+export type MarkersExtension = import("../../cm-chessboard.local").Extension<Markers, MarkersOwnProps, MarkersExtraChessboardProps>;
 
 export const MARKER_TYPE: {
     frame: { class: "marker-frame", slice: "markerFrame" },
@@ -31,10 +31,3 @@ export const MARKER_TYPE: {
     dot: { class: "marker-dot", slice: "markerDot", position: 'above' },
     bevel: { class: "marker-bevel", slice: "markerBevel" }
 };
-
-declare module "cm-chessboard/src/extensions/markers/Markers.js" {
-    export {
-        Markers,
-        MARKER_TYPE,
-    };
-}
