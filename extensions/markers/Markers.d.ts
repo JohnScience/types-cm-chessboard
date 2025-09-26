@@ -1,4 +1,5 @@
 export class Markers {
+    _brand: "Markers";
     [key: string]: any;
 }
 
@@ -11,10 +12,12 @@ export type MarkersExtraChessboardProps = {
 }
 
 export type MarkersOwnProps = {
-    some_props?: any;
+    props: {
+
+    };
 }
 
-export type MarkersExtension = import("../../cm-chessboard").Extension<Markers, MarkersExtraChessboardProps, MarkersOwnProps>;
+export type MarkersExtension = import("../../cm-chessboard").Extension<Markers, MarkersOwnProps, MarkersExtraChessboardProps>;
 
 export const MARKER_TYPE: {
     frame: { class: "marker-frame", slice: "markerFrame" },

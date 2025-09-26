@@ -12,20 +12,20 @@ export type FenPosition = string;
  * An extension for the `cm-chessboard`.
  */
 // ChessboardExtraProps are the props that are added to the Chessboard type by the extension
-export interface Extension<
+export type Extension<
     Class,
-    OwnProps extends Record<string, any> = Record<string, any>,
+    OwnProps extends {
+        props?: Record<string, any>
+    } = {
+        props?: Record<string, any>
+    },
     ChessboardExtraProps extends Record<string, any> = {}
-> {
+> = {
     /**
      * The class of the extension.
      */
     class: Class;
-    /**
-     * The properties passed to the extension.
-     */
-    props?: OwnProps;
-}
+} & OwnProps;
 
 /**
  * The type of border around the chessboard.
@@ -50,6 +50,40 @@ export type ChessPiecesConfig = {
     tileSize: number;
 };
 
+type ExtensionOption<E extends Extension<any, any, any>> =
+    E extends Extension<infer C, infer P, infer Extra>
+    ? { class: C } & P
+    : never;
+
+type ExtensionsExtension<
+    Classes extends any[] = [],
+    ExtraKnownExts extends Extension<any, any, any>[] = [],
+> = Classes extends [any, ...any[]] ? {
+    extensions: {
+        [K in keyof Classes]:
+        import("./extensions/index").InferredExtension<Classes[K], ExtraKnownExts> extends Extension<Classes[K], infer OwnProps, infer ExtraProps>
+        ? ExtensionOption<Extension<Classes[K], OwnProps, ExtraProps>>
+        : never;
+    };
+} : {};
+
+declare class TestClass {
+    [key: string]: any;
+}
+
+// Error: resolves to
+// ```
+// type Test = {
+//     extensions: [{
+//         class: Markers;
+//         props: MarkersExtraChessboardProps;
+//     }, {
+//         class: Markers;
+//         props: MarkersExtraChessboardProps;
+//     }];
+// }
+type Test = ExtensionsExtension<[import("./extensions/markers/Markers").Markers, TestClass]>;
+
 export type ChessboardOptions<
     Classes extends any[] = [],
     ExtraKnownExts extends Extension<any, any, any>[] = [],
@@ -71,18 +105,10 @@ export type ChessboardOptions<
         showCoordinates: boolean;
         borderType: BorderType;
         aspectRatio: number;
-        pieces: ChessPiecesConfig,
+        pieces: ChessPiecesConfig;
         animationDuration: number;
-    },
-} & (Classes extends [any, ...any[]] ? {
-    extensions: {
-        [K in keyof Classes]:
-        import("./extensions/index").
-        InferredExtensions<[Classes[K]], ExtraKnownExts>[0] extends Extension<infer C, infer OwnProps, any>
-        ? { class: C; props: OwnProps }
-        : never
-    }[]
-} : {});
+    };
+} & ExtensionsExtension<Classes, ExtraKnownExts>;
 
 export type File = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h";
 export type Rank = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8";
