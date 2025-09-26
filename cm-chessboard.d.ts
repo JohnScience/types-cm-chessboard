@@ -1,4 +1,5 @@
 type Color = import("./view/ChessboardView").Color;
+type ChessboardState = import("./model/ChessboardState").ChessboardState;
 
 /**
  * Forsyth-Edwards Notation (FEN) string that
@@ -11,15 +12,19 @@ export type FenPosition = string;
  * An extension for the `cm-chessboard`.
  */
 // ChessboardExtraProps are the props that are added to the Chessboard type by the extension
-export interface Extension<ChessboardExtraProps extends Record<string, any> = {}> {
+export interface Extension<
+    Class,
+    OwnProps extends Record<string, any> = Record<string, any>,
+    ChessboardExtraProps extends Record<string, any> = {}
+> {
     /**
      * The class of the extension.
      */
-    class: any;
+    class: Class;
     /**
      * The properties passed to the extension.
      */
-    props?: any;
+    props?: OwnProps;
 }
 
 /**
@@ -45,7 +50,7 @@ export type ChessPiecesConfig = {
     tileSize: number;
 };
 
-export interface ChessboardOptions {
+export type ChessboardOptions<Extensions extends Extension<any, any>[] = []> = {
     /**
      * The initial position of the chess pieces on the board in Forsyth-Edwards Notation (FEN).
      * 
@@ -66,8 +71,9 @@ export interface ChessboardOptions {
         pieces: ChessPiecesConfig,
         animationDuration: number;
     },
-    extensions?: Extension[];
-}
+} & (Extensions extends [Extension<any, any>, ...Extension<any, any>[]] ? {
+    extensions: Extensions;
+} : {});
 
 export type File = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h";
 export type Rank = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8";
@@ -80,8 +86,9 @@ export const PIECE: {
 
 export type Piece = typeof PIECE[keyof typeof PIECE];
 
-export class Chessboard {
-    constructor(context: HTMLElement, opts: ChessboardOptions);
+export class Chessboard<Extensions extends Extension<any, any>[] = []> {
+    constructor(context: HTMLElement, opts: ChessboardOptions<Extensions>);
+    state: ChessboardState;
     setPiece(square: Square, piece: Piece, animated: boolean): Promise<any>;
     movePiece(squareFrom: Square, squareTo: Square, animated: boolean): Promise<any>;
     setPosition(fen: FenPosition, animated: boolean): Promise<any>;
@@ -95,7 +102,7 @@ export class Chessboard {
     enableSquareSelect(eventType: any, eventHandler: (event: any) => any): void;
     disableSquareSelect(): void;
     isSquareSelectEnabled(): boolean;
-    addExtension(extension: Extension): void;
+    addExtension<E extends Extension<any, any>>(extension: E): void;
     getExtension(classRef: any): any;
     destroy(): void;
 }
@@ -103,8 +110,8 @@ export class Chessboard {
 type UnionToIntersection<U> =
     (U extends any ? (x: U) => void : never) extends ((x: infer I) => void) ? I : never;
 
-export type ChessboardWithExtensions<Extensions extends [Extension<any>, ...Extension<any>[]]> = Chessboard &
-    UnionToIntersection<Extensions[number] extends Extension<infer P> ? P : never>;
+export type ChessboardWithExtensions<Extensions extends [Extension<any, any>, ...Extension<any, any>[]]> = Chessboard &
+    UnionToIntersection<Extensions[number] extends Extension<any, any, infer P> ? P : never>;
 
 declare module "cm-chessboard" {
     export const Chessboard: typeof import("./cm-chessboard").Chessboard;

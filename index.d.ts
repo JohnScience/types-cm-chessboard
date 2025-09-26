@@ -3,5 +3,7 @@
 /// <reference path="extensions/promotion-dialog/PromotionDialog.d.ts" />
 /// <reference path="extensions/accessibility/Accessibility.d.ts" />
 /// <reference path="extensions/right-click-annotator/RightClickAnnotator.d.ts" />
+/// <reference path="model/Position.d.ts" />
+/// <reference path="model/ChessboardState.d.ts" />
 
 export * from "./cm-chessboard";
