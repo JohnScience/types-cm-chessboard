@@ -1,3 +1,5 @@
+import type { UnionToIntersection } from "./helpers.local";
+
 import type { ChessboardState } from "./model/ChessboardState.local";
 import type { Color } from "./view/ChessboardView.local";
 
@@ -154,9 +156,6 @@ export class Chessboard<
     getExtension(classRef: any): any;
     destroy(): void;
 }
-
-type UnionToIntersection<U> =
-    (U extends any ? (x: U) => void : never) extends ((x: infer I) => void) ? I : never;
 
 export type ChessboardWithExtensions<Extensions extends [Extension<any, any>, ...Extension<any, any>[]]> = Chessboard &
     UnionToIntersection<Extensions[number] extends Extension<any, any, infer P> ? P : never>;
