@@ -10,7 +10,11 @@ export type MarkersExtraChessboardProps = {
     removeLegalMovesMarkers: any;
 }
 
-export type MarkersExtension = import("../../cm-chessboard").Extension<MarkersExtraChessboardProps>;
+export type MarkersOwnProps = {
+    some_props?: any;
+}
+
+export type MarkersExtension = import("../../cm-chessboard").Extension<Markers, MarkersExtraChessboardProps, MarkersOwnProps>;
 
 export const MARKER_TYPE: {
     frame: { class: "marker-frame", slice: "markerFrame" },

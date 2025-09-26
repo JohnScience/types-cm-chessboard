@@ -50,7 +50,10 @@ export type ChessPiecesConfig = {
     tileSize: number;
 };
 
-export type ChessboardOptions<Extensions extends Extension<any, any>[] = []> = {
+export type ChessboardOptions<
+    Classes extends any[] = [],
+    ExtraKnownExts extends Extension<any, any, any>[] = [],
+> = {
     /**
      * The initial position of the chess pieces on the board in Forsyth-Edwards Notation (FEN).
      * 
@@ -71,8 +74,14 @@ export type ChessboardOptions<Extensions extends Extension<any, any>[] = []> = {
         pieces: ChessPiecesConfig,
         animationDuration: number;
     },
-} & (Extensions extends [Extension<any, any>, ...Extension<any, any>[]] ? {
-    extensions: Extensions;
+} & (Classes extends [any, ...any[]] ? {
+    extensions: {
+        [K in keyof Classes]:
+        import("./extensions/index").
+        InferredExtensions<[Classes[K]], ExtraKnownExts>[0] extends Extension<infer C, infer OwnProps, any>
+        ? { class: C; props: OwnProps }
+        : never
+    }[]
 } : {});
 
 export type File = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h";
@@ -86,8 +95,11 @@ export const PIECE: {
 
 export type Piece = typeof PIECE[keyof typeof PIECE];
 
-export class Chessboard<Extensions extends Extension<any, any>[] = []> {
-    constructor(context: HTMLElement, opts: ChessboardOptions<Extensions>);
+export class Chessboard<
+    Classes extends any[] = [],
+    ExtraKnownExts extends Extension<any, any, any>[] = [],
+> {
+    constructor(context: HTMLElement, opts: ChessboardOptions<Classes, ExtraKnownExts>);
     state: ChessboardState;
     setPiece(square: Square, piece: Piece, animated: boolean): Promise<any>;
     movePiece(squareFrom: Square, squareTo: Square, animated: boolean): Promise<any>;
