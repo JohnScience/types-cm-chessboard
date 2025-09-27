@@ -4,6 +4,7 @@ type Color = import("../../view/ChessboardView.local").Color;
 
 declare module "cm-chessboard/src/extensions/promotion-dialog/PromotionDialog.js" {
     export class PromotionDialog {
+        _brand: "PromotionDialog";
         [key: string]: any;
     }
 

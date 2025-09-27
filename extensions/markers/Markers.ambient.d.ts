@@ -1,5 +1,7 @@
 declare module "cm-chessboard/src/extensions/markers/Markers.js" {
     export type Markers = import("./Markers.local").Markers;
+    export const Markers: typeof import("./Markers.local").Markers;
+
     export type MarkersExtension = import("./Markers.local").MarkersExtension;
 
     export const MARKER_TYPE: {
