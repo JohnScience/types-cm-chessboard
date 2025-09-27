@@ -1,3 +1,6 @@
+import type { ConcatTuples } from "../helpers.local";
+import type { MarkersExtension } from "./markers/Markers.local";
+
 export type OwnProps = {
     props?: Record<string, any>;
 }
@@ -6,6 +9,10 @@ export type DefaultOwnProps = {
     props?: Record<string, any>;
 }
 
+export type ChessboardExtraProps = Record<string, any>;
+
+export type DefaultExtraChessboardProps = {};
+
 /**
  * An extension for the `cm-chessboard`.
  */
@@ -13,7 +20,7 @@ export type DefaultOwnProps = {
 export type Extension<
     Class,
     OP extends OwnProps = DefaultOwnProps,
-    ChessboardExtraProps extends Record<string, any> = {}
+    EP extends ChessboardExtraProps = DefaultExtraChessboardProps
 > = {
     /**
      * The class of the extension.
@@ -21,16 +28,9 @@ export type Extension<
     class: Class;
 } & OP;
 
-type Markers =
-    typeof import("./markers/Markers.local").Markers;
-type MarkersExtension =
-    import("./markers/Markers.local").MarkersExtension;
-
 type KnownExtensions = [
     MarkersExtension,
 ];
-
-type ConcatTuples<T extends any[], U extends any[]> = [...T, ...U];
 
 type ExtensionByClass<
     C,
@@ -45,7 +45,7 @@ type InferredExtension<
     C,
     ExtraExts extends Extension<any, any, any>[] = []
 > = [ExtensionByClass<C, ExtraExts>] extends [never]
-    ? Extension<C, any, any>
+    ? Extension<C, DefaultOwnProps, DefaultExtraChessboardProps>
     : ExtensionByClass<C, ExtraExts>;
 
 export type InferredExtensions<
