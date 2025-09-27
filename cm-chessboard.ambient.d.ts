@@ -10,10 +10,12 @@ declare module "cm-chessboard" {
     export const FEN: typeof import("./model/Position.local").FEN;
 
     export const Chessboard:
-        import("./helpers.local").RefinedReturnType<
-            typeof import("./cm-chessboard.local").Chessboard,
-            import("./cm-chessboard.local").ChessboardWithExtensions
-        >;
+        new <
+            Classes extends any[] = [],
+            ExtraKnownExts extends import("./cm-chessboard.local").Extension<any, any, any>[] = []
+        >(
+            ...args: ConstructorParameters<typeof import("./cm-chessboard.local").Chessboard<Classes, ExtraKnownExts>>
+        ) => import("./cm-chessboard.local").ChessboardWithExtensions<Classes, ExtraKnownExts>;
     export type Chessboard<
         Classes extends any[] = [],
         ExtraKnownExts extends import("./cm-chessboard.local").Extension<any, any, any>[] = [],
