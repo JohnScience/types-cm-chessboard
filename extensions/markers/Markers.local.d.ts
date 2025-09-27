@@ -13,7 +13,7 @@ export type MarkersExtraChessboardProps = {
 
 export type MarkersOwnProps = {
     props: {
-
+        own_prop_example?: string;
     };
 }
 

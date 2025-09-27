@@ -5,6 +5,7 @@ import type { ChessboardState } from "./model/ChessboardState.local";
 import type { Color } from "./view/ChessboardView.local";
 
 import type { InferredExtension } from "./extensions/index.local";
+import { Markers } from "./extensions/markers/Markers.local";
 
 export type { ChessboardEvent, Color } from "./view/ChessboardView.local"
 
@@ -49,8 +50,8 @@ type ExtensionsExtension<
 > = Classes extends [any, ...any[]] ? {
     extensions: {
         [K in keyof Classes]:
-        InferredExtension<Classes[K], ExtraKnownExts> extends Extension<Classes[K], infer OwnProps, infer ExtraProps>
-        ? ExtensionOption<Extension<Classes[K], OwnProps, ExtraProps>>
+        InferredExtension<Classes[K], ExtraKnownExts> extends Extension<Classes[K], infer OP, infer EP>
+        ? ExtensionOption<Extension<Classes[K], OP, EP>>
         : never;
     };
 } : {};
@@ -58,19 +59,6 @@ type ExtensionsExtension<
 declare class TestClass {
     [key: string]: any;
 }
-
-// Error: resolves to
-// ```
-// type Test = {
-//     extensions: [{
-//         class: Markers;
-//         props: MarkersExtraChessboardProps;
-//     }, {
-//         class: Markers;
-//         props: MarkersExtraChessboardProps;
-//     }];
-// }
-type Test = ExtensionsExtension<[import("./extensions/markers/Markers.local").Markers, TestClass]>;
 
 export type ChessboardOptions<
     Classes extends any[] = [],
@@ -141,17 +129,28 @@ export class Chessboard<
     destroy(): void;
 }
 
+/**
+ * Maps a tuple of classes to a tuple of their respective ChessboardExtraProps.
+ */
+type ChessboardExtraPropsTuple<
+    Classes extends any[],
+    ExtraKnownExts extends Extension<any, any, any>[] = []
+> = {
+        [K in keyof Classes]: InferredExtension<Classes[K], ExtraKnownExts> extends Extension<
+            any,
+            any,
+            infer EP
+        >
+        ? EP
+        : {};
+    };
+
+type ChessboardExtraProps<
+    Classes extends any[] = [],
+    ExtraKnownExts extends Extension<any, any, any>[] = []
+> = UnionToIntersection<ChessboardExtraPropsTuple<Classes, ExtraKnownExts>[number]>;
+
 export type ChessboardWithExtensions<
     Classes extends any[] = [],
     ExtraKnownExts extends Extension<any, any, any>[] = []
-> = Chessboard<Classes, ExtraKnownExts> &
-    UnionToIntersection<
-        Classes[number] extends InferredExtension<
-            infer C,
-            ExtraKnownExts
-        > ?
-        InferredExtension<C, ExtraKnownExts> extends Extension<C, any, infer ChessboardExtraProps>
-        ? ChessboardExtraProps
-        : never
-        : never
-    >;
+> = Chessboard<Classes, ExtraKnownExts> & ChessboardExtraProps<Classes, ExtraKnownExts>; 
