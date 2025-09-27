@@ -14,4 +14,6 @@ declare module "cm-chessboard" {
         Classes extends any[] = [],
         ExtraKnownExts extends import("./cm-chessboard.local").Extension<any, any, any>[] = [],
     > = import("./cm-chessboard.local").Chessboard<Classes, ExtraKnownExts>;
+
+    export type ChessboardEvent<C extends Chessboard> = import("./view/ChessboardView.local").ChessboardEvent<C>;
 }
