@@ -1,4 +1,25 @@
-import { Extension } from "../cm-chessboard.local";
+export type OwnProps = {
+    props?: Record<string, any>;
+}
+
+export type DefaultOwnProps = {
+    props?: Record<string, any>;
+}
+
+/**
+ * An extension for the `cm-chessboard`.
+ */
+// ChessboardExtraProps are the props that are added to the Chessboard type by the extension
+export type Extension<
+    Class,
+    OP extends OwnProps = DefaultOwnProps,
+    ChessboardExtraProps extends Record<string, any> = {}
+> = {
+    /**
+     * The class of the extension.
+     */
+    class: Class;
+} & OP;
 
 type Markers =
     typeof import("./markers/Markers.local").Markers;

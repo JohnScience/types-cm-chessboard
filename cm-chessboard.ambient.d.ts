@@ -12,13 +12,13 @@ declare module "cm-chessboard" {
     export const Chessboard:
         new <
             Classes extends any[] = [],
-            ExtraKnownExts extends import("./cm-chessboard.local").Extension<any, any, any>[] = []
+            ExtraKnownExts extends import("./extensions/index.local").Extension<any, any, any>[] = []
         >(
             ...args: ConstructorParameters<typeof import("./cm-chessboard.local").Chessboard<Classes, ExtraKnownExts>>
         ) => import("./cm-chessboard.local").ChessboardWithExtensions<Classes, ExtraKnownExts>;
     export type Chessboard<
         Classes extends any[] = [],
-        ExtraKnownExts extends import("./cm-chessboard.local").Extension<any, any, any>[] = [],
+        ExtraKnownExts extends import("./extensions/index.local").Extension<any, any, any>[] = [],
     > = import("./cm-chessboard.local").ChessboardWithExtensions<Classes, ExtraKnownExts>;
 
     export type ChessboardEvent<C extends Chessboard> = import("./view/ChessboardView.local").ChessboardEvent<C>;

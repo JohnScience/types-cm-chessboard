@@ -1,5 +1,6 @@
 import type { UnionToIntersection } from "./helpers.local";
 
+import type { Extension } from "./extensions/index.local";
 import type { ChessboardState } from "./model/ChessboardState.local";
 import type { Color } from "./view/ChessboardView.local";
 
@@ -13,25 +14,6 @@ export type { ChessboardEvent, Color } from "./view/ChessboardView.local"
  * @see https://www.chess.com/terms/fen-chess
  */
 export type FenPosition = string;
-
-/**
- * An extension for the `cm-chessboard`.
- */
-// ChessboardExtraProps are the props that are added to the Chessboard type by the extension
-export type Extension<
-    Class,
-    OwnProps extends {
-        props?: Record<string, any>
-    } = {
-        props?: Record<string, any>
-    },
-    ChessboardExtraProps extends Record<string, any> = {}
-> = {
-    /**
-     * The class of the extension.
-     */
-    class: Class;
-} & OwnProps;
 
 /**
  * The type of border around the chessboard.
