@@ -3,6 +3,8 @@ import type { UnionToIntersection } from "./helpers.local";
 import type { ChessboardState } from "./model/ChessboardState.local";
 import type { Color } from "./view/ChessboardView.local";
 
+import type { InferredExtension } from "./extensions/index.local";
+
 export type { ChessboardEvent, Color } from "./view/ChessboardView.local"
 
 /**
@@ -65,7 +67,7 @@ type ExtensionsExtension<
 > = Classes extends [any, ...any[]] ? {
     extensions: {
         [K in keyof Classes]:
-        import("./extensions/index.local").InferredExtension<Classes[K], ExtraKnownExts> extends Extension<Classes[K], infer OwnProps, infer ExtraProps>
+        InferredExtension<Classes[K], ExtraKnownExts> extends Extension<Classes[K], infer OwnProps, infer ExtraProps>
         ? ExtensionOption<Extension<Classes[K], OwnProps, ExtraProps>>
         : never;
     };
@@ -157,5 +159,17 @@ export class Chessboard<
     destroy(): void;
 }
 
-export type ChessboardWithExtensions<Extensions extends [Extension<any, any>, ...Extension<any, any>[]]> = Chessboard &
-    UnionToIntersection<Extensions[number] extends Extension<any, any, infer P> ? P : never>;
+export type ChessboardWithExtensions<
+    Classes extends any[] = [],
+    ExtraKnownExts extends Extension<any, any, any>[] = []
+> = Chessboard<Classes, ExtraKnownExts> &
+    UnionToIntersection<
+        Classes[number] extends InferredExtension<
+            infer C,
+            ExtraKnownExts
+        > ?
+        InferredExtension<C, ExtraKnownExts> extends Extension<C, any, infer ChessboardExtraProps>
+        ? ChessboardExtraProps
+        : never
+        : never
+    >;
