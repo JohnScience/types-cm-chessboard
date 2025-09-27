@@ -1,7 +1,7 @@
 import { Extension } from "../cm-chessboard.local";
 
 type Markers =
-    import("./markers/Markers.local").Markers;
+    typeof import("./markers/Markers.local").Markers;
 type MarkersExtension =
     import("./markers/Markers.local").MarkersExtension;
 

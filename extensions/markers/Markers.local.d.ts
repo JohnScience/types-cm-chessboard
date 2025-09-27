@@ -17,4 +17,4 @@ export type MarkersOwnProps = {
     };
 }
 
-export type MarkersExtension = import("../../cm-chessboard.local").Extension<Markers, MarkersOwnProps, MarkersExtraChessboardProps>;
+export type MarkersExtension = import("../../cm-chessboard.local").Extension<typeof Markers, MarkersOwnProps, MarkersExtraChessboardProps>;
