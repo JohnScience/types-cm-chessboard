@@ -39,19 +39,19 @@ export type ChessPiecesConfig = {
     tileSize: number;
 };
 
-type ExtensionOption<E extends Extension<any, any, any>> =
-    E extends Extension<infer C, infer P, infer Extra>
+type ExtensionOption<E extends Extension<any, any, any, any>> =
+    E extends Extension<any, infer C, infer P, any>
     ? { class: C } & P
     : never;
 
 type ExtensionsExtension<
-    Classes extends any[] = [],
-    ExtraKnownExts extends Extension<any, any, any>[] = [],
+    Classes extends (abstract new (...args: any) => any)[] = [],
+    ExtraKnownExts extends Extension<any, any, any, any>[] = [],
 > = Classes extends [any, ...any[]] ? {
     extensions: {
         [K in keyof Classes]:
-        InferredExtension<Classes[K], ExtraKnownExts> extends Extension<Classes[K], infer OP, infer EP>
-        ? ExtensionOption<Extension<Classes[K], OP, EP>>
+        InferredExtension<Classes[K], ExtraKnownExts> extends Extension<infer Name, Classes[K], infer OP, infer EP>
+        ? ExtensionOption<Extension<Name, Classes[K], OP, EP>>
         : never;
     };
 } : {};
@@ -61,8 +61,8 @@ declare class TestClass {
 }
 
 export type ChessboardOptions<
-    Classes extends any[] = [],
-    ExtraKnownExts extends Extension<any, any, any>[] = [],
+    Classes extends (abstract new (...args: any) => any)[] = [],
+    ExtraKnownExts extends Extension<any, any, any, any>[] = [],
 > = {
     /**
      * The initial position of the chess pieces on the board in Forsyth-Edwards Notation (FEN).
@@ -106,8 +106,8 @@ export const PIECES_FILE_TYPE: {
 };
 
 export class Chessboard<
-    Classes extends any[] = [],
-    ExtraKnownExts extends Extension<any, any, any>[] = [],
+    Classes extends (abstract new (...args: any) => any)[] = [],
+    ExtraKnownExts extends Extension<any, any, any, any>[] = [],
 > {
     constructor(context: HTMLElement, opts: ChessboardOptions<Classes, ExtraKnownExts>);
     state: ChessboardState;
@@ -124,7 +124,7 @@ export class Chessboard<
     enableSquareSelect(eventType: any, eventHandler: (event: any) => any): void;
     disableSquareSelect(): void;
     isSquareSelectEnabled(): boolean;
-    addExtension<E extends Extension<any, any>>(extension: E): void;
+    addExtension<E extends Extension<any, any, any, any>>(extension: E): void;
     getExtension(classRef: any): any;
     destroy(): void;
 }
@@ -133,10 +133,11 @@ export class Chessboard<
  * Maps a tuple of classes to a tuple of their respective ChessboardExtraProps.
  */
 type ChessboardExtraPropsTuple<
-    Classes extends any[],
-    ExtraKnownExts extends Extension<any, any, any>[] = []
+    Classes extends (abstract new (...args: any) => any)[],
+    ExtraKnownExts extends Extension<any, any, any, any>[] = []
 > = {
         [K in keyof Classes]: InferredExtension<Classes[K], ExtraKnownExts> extends Extension<
+            any,
             any,
             any,
             infer EP
@@ -146,11 +147,11 @@ type ChessboardExtraPropsTuple<
     };
 
 type ChessboardExtraProps<
-    Classes extends any[] = [],
-    ExtraKnownExts extends Extension<any, any, any>[] = []
+    Classes extends (abstract new (...args: any) => any)[] = [],
+    ExtraKnownExts extends Extension<any, any, any, any>[] = []
 > = UnionToIntersection<ChessboardExtraPropsTuple<Classes, ExtraKnownExts>[number]>;
 
 export type ChessboardWithExtensions<
-    Classes extends any[] = [],
-    ExtraKnownExts extends Extension<any, any, any>[] = []
+    Classes extends (abstract new (...args: any) => any)[] = [],
+    ExtraKnownExts extends Extension<any, any, any, any>[] = []
 > = Chessboard<Classes, ExtraKnownExts> & ChessboardExtraProps<Classes, ExtraKnownExts>; 

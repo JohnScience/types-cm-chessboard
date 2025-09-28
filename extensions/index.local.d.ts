@@ -20,8 +20,8 @@ export type DefaultExtraChessboardProps = {};
 export type Extension<
     Name extends string,
     Class extends abstract new (...args: any) => any,
-    OP extends OwnProps = DefaultOwnProps,
-    EP extends ChessboardExtraProps = DefaultExtraChessboardProps
+    OP extends OwnProps /*= DefaultOwnProps */,
+    EP extends ChessboardExtraProps /*= DefaultExtraChessboardProps */
 > = {
     _phantomName: Name;
     _phantomClass: Class;
@@ -34,24 +34,27 @@ type KnownExtensions = [
 ];
 
 type ExtensionByClass<
-    C,
-    ExtraExts extends Extension<any, any, any>[] = []
-> = ConcatTuples<ExtraExts, KnownExtensions>[number] extends Extension<infer Class, infer OwnProps, infer ExtraChessboardProps>
+    C extends abstract new (...args: any) => any,
+    ExtraExts extends Extension<any, any, any, any>[] = []
+> = ConcatTuples<ExtraExts, KnownExtensions>[number] extends Extension<infer Name, infer Class, infer OwnProps, infer ExtraChessboardProps>
     ? [C] extends [Class] // wrap in tuple to avoid union distribution
-    ? Extension<Class, OwnProps, ExtraChessboardProps>
+    ? Extension<Name, Class, OwnProps, ExtraChessboardProps>
     : never
     : never;
 
+// type TestExtensionByClass0 = ExtensionByClass<typeof import("../helpers.local").SomeUnknownClass>;
+// type TestExtensionByClass1 = ExtensionByClass<typeof import("./markers/Markers.local").Markers>;
+
 type InferredExtension<
     C extends abstract new (...args: any) => any,
-    ExtraExts extends Extension<any, any, any>[] = []
+    ExtraExts extends Extension<any, any, any, any>[] = []
 > = [ExtensionByClass<C, ExtraExts>] extends [never]
     ? Extension<"Unknown", C, DefaultOwnProps, DefaultExtraChessboardProps>
     : ExtensionByClass<C, ExtraExts>;
 
 export type InferredExtensions<
     Classes extends any[],
-    ExtraExts extends Extension<any, any, any>[] = []
+    ExtraExts extends Extension<any, any, any, any>[] = []
 > = {
         [K in keyof Classes]: InferredExtension<Classes[K], ExtraExts>;
     };

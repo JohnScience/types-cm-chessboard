@@ -3,3 +3,7 @@ export type UnionToIntersection<U> =
 
 export type ConcatTuples<T extends any[], U extends any[]> = [...T, ...U];
 
+export class SomeUnknownClass {
+    _brand: "SomeUnknownClass";
+    [key: string]: any;
+}
