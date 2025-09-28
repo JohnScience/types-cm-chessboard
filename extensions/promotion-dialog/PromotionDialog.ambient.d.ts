@@ -23,7 +23,12 @@ declare module "cm-chessboard/src/extensions/promotion-dialog/PromotionDialog.js
         isPromotionDialogShown: () => boolean;
     }
 
-    export type PromotionDialogExtension = import("../index.local").Extension<typeof PromotionDialog, PromotionDialogOwnProps, PromotionDialogExtraChessboardProps>;
+    export type PromotionDialogExtension = import("../index.local").Extension<
+        "PromotionDialog",
+        typeof PromotionDialog,
+        PromotionDialogOwnProps,
+        PromotionDialogExtraChessboardProps
+    >;
 
     export const PROMOTION_DIALOG_RESULT_TYPE: {
         pieceSelected: "pieceSelected",

@@ -17,4 +17,9 @@ export type MarkersOwnProps = {
     };
 }
 
-export type MarkersExtension = import("../index.local").Extension<typeof Markers, MarkersOwnProps, MarkersExtraChessboardProps>;
+export type MarkersExtension = import("../index.local").Extension<
+    "Markers",
+    typeof Markers,
+    MarkersOwnProps,
+    MarkersExtraChessboardProps
+>;

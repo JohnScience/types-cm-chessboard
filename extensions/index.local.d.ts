@@ -18,10 +18,12 @@ export type DefaultExtraChessboardProps = {};
  */
 // ChessboardExtraProps are the props that are added to the Chessboard type by the extension
 export type Extension<
+    Name extends string,
     Class extends abstract new (...args: any) => any,
     OP extends OwnProps = DefaultOwnProps,
     EP extends ChessboardExtraProps = DefaultExtraChessboardProps
 > = {
+    _phantomName: Name;
     _phantomClass: Class;
     _phantomOwnProps: OP;
     _phantomExtraChessboardProps: EP;
@@ -44,7 +46,7 @@ type InferredExtension<
     C extends abstract new (...args: any) => any,
     ExtraExts extends Extension<any, any, any>[] = []
 > = [ExtensionByClass<C, ExtraExts>] extends [never]
-    ? Extension<C, DefaultOwnProps, DefaultExtraChessboardProps>
+    ? Extension<"Unknown", C, DefaultOwnProps, DefaultExtraChessboardProps>
     : ExtensionByClass<C, ExtraExts>;
 
 export type InferredExtensions<
