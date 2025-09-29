@@ -39,14 +39,21 @@ type KnownExtensions = [
     RightClickAnnotatorExtension,
 ];
 
+// The union of all known extensions, with a generic parameter to add more known extensions
+type AnyExtension<ExtraExts extends Extension<any, any, any, any>[] = []> = ConcatTuples<ExtraExts, KnownExtensions>[number];
+
+// type TestAnyExtension0 = AnyExtension<[]>;
+
 type ExtensionByClass<
     C extends abstract new (...args: any) => any,
     ExtraExts extends Extension<any, any, any, any>[] = []
-> = ConcatTuples<ExtraExts, KnownExtensions>[number] extends Extension<infer Name, infer Class, infer OwnProps, infer ExtraChessboardProps>
-    ? [C] extends [Class] // wrap in tuple to avoid union distribution
-    ? Extension<Name, Class, OwnProps, ExtraChessboardProps>
-    : never
-    : never;
+> = Extract<
+    AnyExtension<ExtraExts>,
+    Extension<any, C, any, any>
+>;
+
+// type TestExtensionByClass0 = ExtensionByClass<MarkersExtension["_phantomClass"]>;
+// type TestExtensionByClass1 = ExtensionByClass<AccessibilityExtension["_phantomClass"]>;
 
 type InferredExtension<
     C extends abstract new (...args: any) => any,
@@ -54,6 +61,9 @@ type InferredExtension<
 > = [ExtensionByClass<C, ExtraExts>] extends [never]
     ? Extension<"Unknown", C, DefaultOwnProps, DefaultExtraChessboardProps>
     : ExtensionByClass<C, ExtraExts>;
+
+// type TestInferredExtension0 = InferredExtension<typeof import("../helpers.local").SomeUnknownClass>;
+// type TestInferredExtension1 = InferredExtension<MarkersExtension["_phantomClass"]>;
 
 export type InferredExtensions<
     Classes extends any[],

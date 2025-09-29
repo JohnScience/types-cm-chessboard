@@ -56,6 +56,9 @@ type ExtensionsExtension<
     };
 } : {};
 
+// type TestExtensionsExtension0 = ExtensionsExtension<[]>;
+// type TestExtensionsExtension1 = ExtensionsExtension<[typeof Markers]>;
+
 declare class TestClass {
     [key: string]: any;
 }
