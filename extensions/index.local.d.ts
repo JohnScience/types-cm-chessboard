@@ -1,5 +1,8 @@
 import type { ConcatTuples } from "../helpers.local";
+import type { AccessibilityExtension } from "./accessibility/Accessibility.local";
 import type { MarkersExtension } from "./markers/Markers.local";
+import type { PromotionDialogExtension } from "./promotion-dialog/PromotionDialog.local";
+import { RightClickAnnotatorExtension } from "./right-click-annotator/RightClickAnnotator.local";
 
 export type OwnProps = {
     props?: Record<string, any>;
@@ -30,7 +33,10 @@ export type Extension<
 };
 
 type KnownExtensions = [
+    AccessibilityExtension,
     MarkersExtension,
+    PromotionDialogExtension,
+    RightClickAnnotatorExtension,
 ];
 
 type ExtensionByClass<
@@ -41,9 +47,6 @@ type ExtensionByClass<
     ? Extension<Name, Class, OwnProps, ExtraChessboardProps>
     : never
     : never;
-
-// type TestExtensionByClass0 = ExtensionByClass<typeof import("../helpers.local").SomeUnknownClass>;
-// type TestExtensionByClass1 = ExtensionByClass<typeof import("./markers/Markers.local").Markers>;
 
 type InferredExtension<
     C extends abstract new (...args: any) => any,

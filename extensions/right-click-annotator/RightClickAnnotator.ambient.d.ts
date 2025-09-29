@@ -1,6 +1,6 @@
 declare module "cm-chessboard/src/extensions/right-click-annotator/RightClickAnnotator.js" {
-    export class RightClickAnnotator {
-        _brand: "RightClickAnnotator";
-        [key: string]: any;
-    }
+    export type RightClickAnnotator = import("./RightClickAnnotator.local").RightClickAnnotator;
+    export const RightClickAnnotator: typeof import("./RightClickAnnotator.local").RightClickAnnotator;
+    export type RightClickAnnotatorExtension = import("./RightClickAnnotator.local").RightClickAnnotatorExtension;
 }
+
