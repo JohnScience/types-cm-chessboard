@@ -8,11 +8,11 @@ export type SupportedLanguage = "en" | "de";
 export type AccessibilityOwnProps = {
     props?: {
         language?: SupportedLanguage;
-        brailleNotationInAlt: boolean;
-        movePieceForm: boolean;
-        boardAsTable: boolean;
-        piecesAsList: boolean;
-        visuallyHidden: boolean;
+        brailleNotationInAlt?: boolean;
+        movePieceForm?: boolean;
+        boardAsTable?: boolean;
+        piecesAsList?: boolean;
+        visuallyHidden?: boolean;
     };
 }
 
